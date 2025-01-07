@@ -7,11 +7,16 @@ import { Article } from "./article";
 import { Redis } from "@upstash/redis";
 import { Eye } from "lucide-react";
 import SkillsDrawer from "@/app/components/Skills-section"; // Import the SkillsDrawer
-import { Props } from "@nextui-org/card/dist/use-card";
 
 const redis = Redis.fromEnv();
 
 export const revalidate = 60;
+
+type Props = {
+  params: {
+    slug: string;
+  };
+};
 
 export default async function ProjectsPage({ params }: Props) {
   const views = (

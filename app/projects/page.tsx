@@ -29,8 +29,8 @@ export default async function ProjectsPage({ params }: Props) {
   }, {} as Record<string, number>);
 
   const featured = allProjects.find((project) => project.slug === "Nvidea Stock Predictor") || allProjects[0];
-  const top2 = allProjects.find((project) => project.slug === "planetfall") || allProjects[1];
-  const top3 = allProjects.find((project) => project.slug === "highstorm") || allProjects[2];
+  const top2 = allProjects.find((project) => project.slug === "Transformer") || allProjects[1];
+  const top3 = allProjects.find((project) => project.slug === "Website") || allProjects[2];
 
   const sorted = allProjects
     .filter((p) => p.slug && p.published) // Skip projects without slug or published flag

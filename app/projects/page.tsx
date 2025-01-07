@@ -7,12 +7,13 @@ import { Article } from "./article";
 import { Redis } from "@upstash/redis";
 import { Eye } from "lucide-react";
 import SkillsDrawer from "@/app/components/Skills-section"; // Import the SkillsDrawer
+import { Props } from "@nextui-org/card/dist/use-card";
 
 const redis = Redis.fromEnv();
 
 export const revalidate = 60;
 
-export default async function ProjectsPage() {
+export default async function ProjectsPage({ params }: Props) {
   const views = (
     await redis.mget<number[]>(
       ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":")),
@@ -48,7 +49,7 @@ export default async function ProjectsPage() {
         <div className=" flex items-center justify-between w-full">
           <h2 className="justify-between flex w-full text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
             Projects
-            <SkillsDrawer className='backdrop-blur-md' />
+            <SkillsDrawer />
           </h2>
         </div>
         <div className="w-full h-px bg-zinc-800" />

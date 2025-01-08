@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 async function bundleMdxFile() {
   try {
     // Since the script is in the same folder as access.mdx, use a relative path
-    const filePath = path.join(__dirname, 'access.mdx');
+    const filePath = path.join(__dirname, 'almor.mdx');
     console.log('Reading MDX file from:', filePath);
 
     const mdxSource = fs.readFileSync(filePath, 'utf8');

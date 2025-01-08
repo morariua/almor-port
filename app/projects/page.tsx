@@ -28,21 +28,11 @@ type Props = {
 
 type Views = Record<string, number>;
 
-const getSortedProjects = (allProjects: Project[], featured: Project | null, top2: Project | null, top3: Project | null) => {
-  return allProjects
-    .filter((p) => p.slug && p.published)
-    .filter(
-      (project) =>
-        project.slug !== featured?.slug &&
-        project.slug !== top2?.slug &&
-        project.slug !== top3?.slug,
-    )
-    .sort(
-      (a, b) =>
-        new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
-        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime(),
-    );
-};
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  return allProjects.map((project) => ({
+    slug: project.slug,
+  }));
+}
 
 export default async function ProjectsPage({ params }: Props) {
   let views: Views = {};
@@ -67,7 +57,19 @@ export default async function ProjectsPage({ params }: Props) {
     return <div>No projects found.</div>;
   }
 
-  const sorted = getSortedProjects(allProjects, featured, top2, top3);
+  const sorted = allProjects
+    .filter((p) => p.slug && p.published)
+    .filter(
+      (project) =>
+        project.slug !== featured?.slug &&
+        project.slug !== top2?.slug &&
+        project.slug !== top3?.slug,
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
+        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime(),
+    );
 
   return (
     <div className="relative pb-16">
@@ -135,8 +137,8 @@ export default async function ProjectsPage({ params }: Props) {
         <div className="hidden w-full h-px md:block bg-zinc-800" />
 
         <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
-          {sorted.map((project, index) => (
-            <div key={project.slug} className={index % 3 === 0 ? "col-start-1" : index % 3 === 1 ? "col-start-2" : "col-start-3"}>
+          {sorted.map((project) => (
+            <div key={project.slug}>
               <Card>
                 <Article project={project} views={views[project.slug] ?? 0} />
               </Card>
